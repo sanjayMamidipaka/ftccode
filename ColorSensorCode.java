@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.robot.Robot;
 
+import org.firstinspires.ftc.robotcontroller.external.samples.HardwareConfig;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -21,23 +22,20 @@ import java.util.Locale;
 public class ColorSensorCode extends LinearOpMode {
 
     ColorSensor sensorColor;
-    Hardware robot = new Hardware();
+
     //DistanceSensor sensorDistance;
     DcMotor rightRear;
+    hardwareMapTest robot = new hardwareMapTest();
 
-
-    public void initiliaze()
-    {
-        robot.init(hardwareMap);
-    }
 
 
     @Override
     public void runOpMode() throws InterruptedException {
+    robot.init(hardwareMap);
 
         // get a reference to the color sensor.
-        //sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
-        //rightRear = hardwareMap.dcMotor.get("rightRear");
+        sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
+        rightRear = hardwareMap.dcMotor.get("rightRear");
 
         // get a reference to the distance sensor that shares the same name.
         //sensorDistance = hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
@@ -66,9 +64,9 @@ public class ColorSensorCode extends LinearOpMode {
             // convert the RGB values to HSV values.
             // multiply by the SCALE_FACTOR.
             // then cast it back to int (SCALE_FACTOR is a double)
-            Color.RGBToHSV((int) (robot.sensorColor.red() * SCALE_FACTOR),
-                    (int) (robot.sensorColor.green() * SCALE_FACTOR),
-                    (int) (robot.sensorColor.blue() * SCALE_FACTOR),
+            Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+                    (int) (sensorColor.green() * SCALE_FACTOR),
+                    (int) (sensorColor.blue() * SCALE_FACTOR),
                     hsvValues);
 
             // send the info back to driver station using telemetry function.
@@ -79,17 +77,18 @@ public class ColorSensorCode extends LinearOpMode {
                 if (sensorColor.red() > sensorColor.green()) { //since yellow has a higher red value than green
                     telemetry.addData("Yellow Detected: True", 1);
                     isYellow = false; //gets you out of the for loop
-                    robot.encoderDrive(0.2, 2, 2, 2, 2, 1); //method for moving, in Hardware.java
+                    //encoderDrive(0.2, 2, 2, 2, 2, 1); //method for moving, in Hardware.java
+                    robot.run();
 
                 } else {
                     telemetry.addData("Yellow Detected: False", 1);
                     //isYellow = false;
                 }
             }
-            telemetry.addData("Alpha", robot.sensorColor.alpha());
-            telemetry.addData("Red  ", robot.sensorColor.red());
-            telemetry.addData("Green", robot.sensorColor.green());
-            telemetry.addData("Blue ", robot.sensorColor.blue());
+            telemetry.addData("Alpha", sensorColor.alpha());
+            telemetry.addData("Red  ", sensorColor.red());
+            telemetry.addData("Green", sensorColor.green());
+            telemetry.addData("Blue ", sensorColor.blue());
             telemetry.addData("Hue", hsvValues[0]);
 
             // change the background color to match the color detected by the RGB sensor.
