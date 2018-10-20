@@ -72,9 +72,9 @@ public class TeleOp extends LinearOpMode {
                     FR.setPower(v2);
                     BR.setPower(v4);
 
-                    rotateIntake.setPower(gamepad1.left_trigger);
+                    rotateIntake.setPower(gamepad1.left_trigger*2);
 
-                    rotateIntake.setPower(-gamepad1.right_trigger);
+                    rotateIntake.setPower(-gamepad1.right_trigger*2);
 
                   /*  if(gamepad1.b){
                         BasketServo.setPosition(0.5);
@@ -95,9 +95,14 @@ public class TeleOp extends LinearOpMode {
                         DrawerIntake.setPower(-.3);
                         Thread.sleep(1000);
                     }
+                    else{
+                        DrawerIntake.setPower(0);
+                    }
                     if (gamepad1.dpad_down){
                         DrawerIntake.setPower(.3);
                         Thread.sleep(1000);
+                    }else {
+                        DrawerIntake.setPower(0);
                     }
 
                     if (gamepad1.a){
@@ -105,12 +110,16 @@ public class TeleOp extends LinearOpMode {
                         DrawerOutake.setPower(0.3);
                         Thread.sleep(1000);
 
+                    }else{
+                        DrawerOutake.setPower(0);
                     }
                     if (gamepad1.y){
 
                         DrawerOutake.setPower(-0.3);
                         Thread.sleep(1000);
 
+                    }else{
+                        DrawerOutake.setPower(0);
                     }
 
 
