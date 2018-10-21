@@ -56,21 +56,17 @@ public class TeleOp extends LinearOpMode {
                 while(opModeIsActive()){
                     double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
                     double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
-                    double rightX = gamepad1.right_stick_x;
+                    double rightX = (gamepad1.right_stick_x)/2.0;
                     final double v1 = r * Math.cos(robotAngle) + rightX;
                     final double v2 = r * Math.sin(robotAngle) - rightX;
                     final double v3 = r * Math.sin(robotAngle) + rightX;
                     final double v4 = r * Math.cos(robotAngle) - rightX;
 
                     FL.setPower(v1);
-                    FR.setPower(v2);
-                    BL.setPower(v3);
+                    BL.setPower(v2);
+                    FR.setPower(v3);
                     BR.setPower(v4);
 
-                    FL.setPower(v1);
-                    BL.setPower(v3);
-                    FR.setPower(v2);
-                    BR.setPower(v4);
 
                     rotateIntake.setPower(gamepad1.left_trigger*2);
 
