@@ -139,10 +139,11 @@ public class tensorflow extends LinearOpMode{
 
         colorSensorServo.setPosition(0.6);
 
+        int isRight = 0;
+
         if (tfod != null) {
             tfod.activate();
 
-            while (!isYellow) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
@@ -156,10 +157,18 @@ public class tensorflow extends LinearOpMode{
                             for (Recognition recognition : updatedRecognitions) {
                                 if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
                                     goldMineralX = (int) recognition.getLeft();
-                                } else if (silverMineral1X == -1) {
+                                    telemetry.addData("Gold Detected", 0);
+                                    movement(0.2, 500, 1, 1, 1, 1);//moves forward
+                                    break;
+                                } else if (silverMineral1X == -1) { //if silver is detected
                                     silverMineral1X = (int) recognition.getLeft();
-                                } else {
+                                    telemetry.addData("Silver Mineral", 0);
+                                    movement(0.2, 500, 1, -1, -1, 1); //move to the right
+                                    isRight = 1;
+                                } else if (silverMineral2X == -1 && isRight == 1){ //checks if the robot has already gone right
                                     silverMineral2X = (int) recognition.getLeft();
+                                    telemetry.addData("Silver Mineral", 0);
+                                    movement(0.2, 1000, -1, 1, 1, -1); //moves left
                                 }
                             }
                             if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
@@ -178,7 +187,6 @@ public class tensorflow extends LinearOpMode{
 
             }
         }
-    }
 
 
 
