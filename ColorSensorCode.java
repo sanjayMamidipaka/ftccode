@@ -43,7 +43,7 @@ public class ColorSensorCode extends LinearOpMode {
     public DcMotor rightFront;
     public DcMotor leftFront;
     public ColorSensor sensorColor;
-    public DcMotor hangMotor;
+    public DcMotor markerMotor;
 
     //from TeleOp
 
@@ -66,6 +66,7 @@ public class ColorSensorCode extends LinearOpMode {
         rightFront = hardwareMap.dcMotor.get("rightFront");
         leftFront = hardwareMap.dcMotor.get("leftFront");
         sensorColor = hardwareMap.get(ColorSensor.class, "sensorColor");
+        markerMotor = hardwareMap.dcMotor.get("markerMotor");
 
 
         rightFront.setPower(0.5);
@@ -140,6 +141,13 @@ public class ColorSensorCode extends LinearOpMode {
                 sleep(5000);
                 isYellow = true;
 
+                markerMotor.setPower(0.1); //used for dropping the team marker
+                while (opModeIsActive() && (runtime.milliseconds() < 1500)) {
+                    telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+                    telemetry.update();
+                }
+                markerMotor.setPower(0);
+
             } else {
 
                 telemetry.addData("Yellow Detected: False", 1);
@@ -186,6 +194,15 @@ public class ColorSensorCode extends LinearOpMode {
                     rightRear.setPower(0);
                     leftFront.setPower(0);
                     leftRear.setPower(0);
+                    isYellow = true;
+
+                    markerMotor.setPower(0.1); //used for dropping the team marker
+                while (opModeIsActive() && (runtime.milliseconds() < 1500)) {
+                    telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+                    telemetry.update();
+                }
+                markerMotor.setPower(0);
+
                 }
                 else //if there is white
                 {
@@ -196,12 +213,12 @@ public class ColorSensorCode extends LinearOpMode {
                     sleep(2000);
 
                     runtime.reset();
-                    rightFront.setPower(0.3); //strafe right
-                    rightRear.setPower(-0.3);
-                    leftFront.setPower(0.3);
-                    leftRear.setPower(-0.3);
+                    rightFront.setPower(-0.4); //strafe right
+                    rightRear.setPower(0.4);
+                    leftFront.setPower(-0.3);
+                    leftRear.setPower(0.3);
                     runtime.reset();
-                    while (opModeIsActive() && (runtime.milliseconds() < 2400)) {
+                    while (opModeIsActive() && (runtime.milliseconds() < 4000)) {
                         telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
                         telemetry.update();
                     }
@@ -209,6 +226,29 @@ public class ColorSensorCode extends LinearOpMode {
                     rightRear.setPower(0);
                     leftFront.setPower(0);
                     leftRear.setPower(0);
+                    isYellow = true;
+
+                    runtime.reset();
+                    rightFront.setPower(0.5); //moves forward
+                    rightRear.setPower(0.5);
+                    leftFront.setPower(-0.5);
+                    leftRear.setPower(-0.5);
+                    runtime.reset();
+                    while (opModeIsActive() && (runtime.milliseconds() < 1700)) {
+                        telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+                        telemetry.update();
+                    }
+                    rightFront.setPower(0);
+                    rightRear.setPower(0);
+                    leftFront.setPower(0);
+                    leftRear.setPower(0);
+
+                    markerMotor.setPower(0.1); //used for dropping the team marker
+                while (opModeIsActive() && (runtime.milliseconds() < 1500)) {
+                    telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+                    telemetry.update();
+                }
+                markerMotor.setPower(0);
                 }
 
 
