@@ -30,7 +30,7 @@ public class TeleOpSai extends LinearOpMode {
 
 
     public void runOpMode ()throws InterruptedException{
-       /*
+
         BR = hardwareMap.get(DcMotor.class, "rightRear");
 
         BL = hardwareMap.get(DcMotor.class, "leftRear");
@@ -39,10 +39,10 @@ public class TeleOpSai extends LinearOpMode {
 
         FL = hardwareMap.get(DcMotor.class, "leftFront");
 
-        intake = hardwareMap.get(CRServo.class, "intake");
+        //intake = hardwareMap.get(CRServo.class, "intake");
 
-        arm = hardwareMap.get(DcMotor.class, "arm" );
-        */
+        //arm = hardwareMap.get(DcMotor.class, "arm" );
+
 
 
         hook1 = hardwareMap.get(DcMotor.class, "hangingMotor");
@@ -50,8 +50,8 @@ public class TeleOpSai extends LinearOpMode {
 
 
 
-       // BL.setDirection(DcMotorSimple.Direction.REVERSE);
-        //FL.setDirection(DcMotorSimple.Direction.REVERSE);
+       BR.setDirection(DcMotorSimple.Direction.REVERSE);
+       FR.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
 
@@ -60,7 +60,7 @@ public class TeleOpSai extends LinearOpMode {
         waitForStart();
         if(opModeIsActive()) {
             while(opModeIsActive()){
-                /*
+
                 double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
                 double robotAngle = Math.atan2(-gamepad1.left_stick_y, -gamepad1.left_stick_x) - Math.PI / 4;
                 double rightX = (-gamepad1.right_stick_x)/2.0;
@@ -75,7 +75,7 @@ public class TeleOpSai extends LinearOpMode {
                 FR.setPower(v2);
                 BL.setPower(v3);
                 BR.setPower(v4);
-
+                /*
                 //COLLECTION
                if (gamepad1.right_bumper)
                {
@@ -94,17 +94,17 @@ public class TeleOpSai extends LinearOpMode {
                {
                    intake.setPower(0);
                }
-
+*/
                //ARM
-               arm.setPower(gamepad1.left_trigger);
-               arm.setPower(-gamepad1.right_trigger);
-            */
+               //arm.setPower(gamepad1.left_trigger);
+               //arm.setPower(-gamepad1.right_trigger);
+
                //LIFT
 
-                if(gamepad1.y)
+                if(gamepad1.a)
                 {
-                    hook1.setPower(0.3);
-                    hook2.setPower(-0.3);
+                    hook1.setPower(1);
+                    hook2.setPower(-1);
                 }
                 else
                 {
@@ -112,10 +112,10 @@ public class TeleOpSai extends LinearOpMode {
                     hook1.setPower(0);
                 }
 
-                if(gamepad1.a)
+                if(gamepad1.y)
                 {
-                    hook1.setPower(-0.3);
-                    hook2.setPower(0.3);
+                    hook1.setPower(-1);
+                    hook2.setPower(1);
                 }
                 else
                 {
