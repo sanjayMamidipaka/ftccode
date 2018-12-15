@@ -22,14 +22,7 @@ public class TeleOpSai extends LinearOpMode {
     public DcMotor hook2;
 
 
-
-
-
-
-
-
-
-    public void runOpMode ()throws InterruptedException{
+    public void runOpMode() throws InterruptedException {
 
         BR = hardwareMap.get(DcMotor.class, "rightRear");
 
@@ -44,31 +37,25 @@ public class TeleOpSai extends LinearOpMode {
         //arm = hardwareMap.get(DcMotor.class, "arm" );
 
 
-
         hook1 = hardwareMap.get(DcMotor.class, "hangingMotor");
         hook2 = hardwareMap.get(DcMotor.class, "hangingMotor1");
 
 
-
-       BR.setDirection(DcMotorSimple.Direction.REVERSE);
-       FR.setDirection(DcMotorSimple.Direction.REVERSE);
-
-
-
+        //BR.setDirection(DcMotorSimple.Direction.REVERSE);
+        //FR.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         waitForStart();
-        if(opModeIsActive()) {
-            while(opModeIsActive()){
+        if (opModeIsActive()) {
+            while (opModeIsActive()) {
 
                 double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
                 double robotAngle = Math.atan2(-gamepad1.left_stick_y, -gamepad1.left_stick_x) - Math.PI / 4;
-                double rightX = (-gamepad1.right_stick_x)/2.0;
+                double rightX = (-gamepad1.right_stick_x) / 2.0;
                 final double v1 = r * Math.cos(robotAngle) + rightX;
                 final double v2 = r * Math.sin(robotAngle) - rightX;
                 final double v3 = r * Math.sin(robotAngle) + rightX;
                 final double v4 = r * Math.cos(robotAngle) - rightX;
-
 
 
                 FL.setPower(v1);
@@ -85,7 +72,6 @@ public class TeleOpSai extends LinearOpMode {
                {
                    intake.setPower(0);
                }
-
                if(gamepad1.left_bumper)
                {
                    intake.setPower(-0.2);
@@ -95,49 +81,28 @@ public class TeleOpSai extends LinearOpMode {
                    intake.setPower(0);
                }
 */
-               //ARM
-               //arm.setPower(gamepad1.left_trigger);
-               //arm.setPower(-gamepad1.right_trigger);
+                //ARM
+                //arm.setPower(gamepad1.left_trigger);
+                //arm.setPower(-gamepad1.right_trigger);
 
-               //LIFT
+                //LIFT
 
-                if(gamepad1.a)
-                {
+                if (gamepad1.a) {
                     hook1.setPower(1);
                     hook2.setPower(-1);
-                }
-                else
-                {
+                } else {
                     hook2.setPower(0);
                     hook1.setPower(0);
                 }
 
-                if(gamepad1.y)
-                {
+                if (gamepad1.y) {
                     hook1.setPower(-1);
                     hook2.setPower(1);
-                }
-                else
-                {
+                } else {
                     hook2.setPower(0);
                     hook1.setPower(0);
                 }
-
-
-
-
-
-
-
             }
-
-
-
-
-
-
         }
     }
-
-
 }

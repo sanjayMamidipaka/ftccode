@@ -43,7 +43,9 @@ public class ColorSensorCode extends LinearOpMode {
     public DcMotor rightFront;
     public DcMotor leftFront;
     public ColorSensor sensorColor;
-    public DcMotor markerMotor;
+    public DcMotor hangingMotor;
+    public DcMotor hangingMotor1;
+
 
     //from TeleOp
 
@@ -66,15 +68,54 @@ public class ColorSensorCode extends LinearOpMode {
         rightFront = hardwareMap.dcMotor.get("rightFront");
         leftFront = hardwareMap.dcMotor.get("leftFront");
         sensorColor = hardwareMap.get(ColorSensor.class, "sensorColor");
-        markerMotor = hardwareMap.dcMotor.get("markerMotor");
+        hangingMotor = hardwareMap.dcMotor.get("hangingMotor");
+        hangingMotor1 = hardwareMap.dcMotor.get("hangingMotor1");
+        //markerMotor = hardwareMap.dcMotor.get("markerMotor");
 
 
-        rightFront.setPower(0.5);
-        rightRear.setPower(0.5);
-        leftFront.setPower(-0.5);
-        leftRear.setPower(-0.5);
+        hangingMotor.setPower(-0.5); //brings robot down
+        hangingMotor1.setPower(0.5);
         runtime.reset();
-        while (opModeIsActive() && (runtime.milliseconds() < 700)) {
+        while (opModeIsActive() && (runtime.milliseconds() < 2000)) {
+            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+            telemetry.update();
+        }
+        hangingMotor.setPower(0);
+        hangingMotor1.setPower(0);
+
+
+        rightFront.setPower(-0.4); //strafes right a little to relieve the natural slant
+        rightRear.setPower(0.4);
+        leftFront.setPower(-0.3);
+        leftRear.setPower(0.3);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.milliseconds() < 250)) {
+            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+            telemetry.update();
+        }
+        rightFront.setPower(0);
+        rightRear.setPower(0);
+        leftFront.setPower(0);
+        leftRear.setPower(0);
+        runtime.reset();
+
+        hangingMotor.setPower(-0.5); //brings robot down again
+        hangingMotor1.setPower(0.5);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.milliseconds() < 1000)) {
+            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+            telemetry.update();
+        }
+        hangingMotor.setPower(0);
+        hangingMotor1.setPower(0);
+
+
+        rightFront.setPower(-0.3); //moving forward to remove hook
+        rightRear.setPower(-0.3);
+        leftFront.setPower(0.3);
+        leftRear.setPower(0.3);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.milliseconds() < 1000)) {
             telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
             telemetry.update();
         }
@@ -83,6 +124,27 @@ public class ColorSensorCode extends LinearOpMode {
         leftFront.setPower(0);
         leftRear.setPower(0);
         sleep(2000);
+        runtime.reset();
+
+        rightFront.setPower(0.3); //strafes right
+        rightRear.setPower(-0.3);
+        leftFront.setPower(-0.3);
+        leftRear.setPower(0.3);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.milliseconds() < 3000)) {
+            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+            telemetry.update();
+        }
+        rightFront.setPower(0);
+        rightRear.setPower(0);
+        leftFront.setPower(0);
+        leftRear.setPower(0);
+        sleep(2000);
+        runtime.reset();
+
+
+
+
         telemetry.addData("Not going yet", 0);
 
 
@@ -125,7 +187,7 @@ public class ColorSensorCode extends LinearOpMode {
             if (sensorColor.red() > sensorColor.green()) { //since yellow has a higher red value than green
                 telemetry.addData("Yellow Detected: True", 1);
                 //movement(0.2, 100, -1, -1, -1, -1);
-                rightFront.setPower(0.5);
+                rightFront.setPower(0.5); //moves forward
                 rightRear.setPower(0.5);
                 leftFront.setPower(-0.5);
                 leftRear.setPower(-0.5);
@@ -141,12 +203,6 @@ public class ColorSensorCode extends LinearOpMode {
                 sleep(5000);
                 isYellow = true;
 
-                markerMotor.setPower(0.1); //used for dropping the team marker
-                while (opModeIsActive() && (runtime.milliseconds() < 1500)) {
-                    telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
-                    telemetry.update();
-                }
-                markerMotor.setPower(0);
 
             } else {
 
@@ -160,8 +216,8 @@ public class ColorSensorCode extends LinearOpMode {
                 telemetry.addData("Blue ", sensorColor.blue());
                 telemetry.addData("Hue", hsvValues[0]);
 
-                rightFront.setPower(0.3); //strafes left
-                rightRear.setPower(-0.3);
+                rightFront.setPower(-0.3); //strafes left
+                rightRear.setPower(0.3);
                 leftFront.setPower(0.3);
                 leftRear.setPower(-0.3);
                 runtime.reset();
@@ -196,15 +252,8 @@ public class ColorSensorCode extends LinearOpMode {
                     leftRear.setPower(0);
                     isYellow = true;
 
-                    markerMotor.setPower(0.1); //used for dropping the team marker
-                while (opModeIsActive() && (runtime.milliseconds() < 1500)) {
-                    telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
-                    telemetry.update();
-                }
-                markerMotor.setPower(0);
 
-                }
-                else //if there is white
+                } else //if there is white
                 {
                     telemetry.addData("Yellow: False", 0);
                     sleep(1000);
@@ -213,7 +262,7 @@ public class ColorSensorCode extends LinearOpMode {
                     sleep(2000);
 
                     runtime.reset();
-                    rightFront.setPower(-0.4); //strafe right
+                    rightFront.setPower(-0.4); //strafe all the way right
                     rightRear.setPower(0.4);
                     leftFront.setPower(-0.3);
                     leftRear.setPower(0.3);
@@ -243,58 +292,28 @@ public class ColorSensorCode extends LinearOpMode {
                     leftFront.setPower(0);
                     leftRear.setPower(0);
 
-                    markerMotor.setPower(0.1); //used for dropping the team marker
-                while (opModeIsActive() && (runtime.milliseconds() < 1500)) {
-                    telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+
+                    // change the background color to match the color detected by the RGB sensor.
+                    // pass a reference to the hue, saturation, and value array as an argument
+                    // to the HSVToColor method.
+                    relativeLayout.post(new Runnable() {
+                        public void run() {
+                            relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
+                        }
+                    });
+
                     telemetry.update();
+                    stop();
                 }
-                markerMotor.setPower(0);
-                }
 
-
-
-                // change the background color to match the color detected by the RGB sensor.
-                // pass a reference to the hue, saturation, and value array as an argument
-                // to the HSVToColor method.
-                relativeLayout.post(new Runnable() {
-                    public void run() {
-                        relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
-                    }
-                });
-
-                telemetry.update();
-                stop();
             }
 
         }
+
+
 
     }
-
-
-        public void movement ( double LFPower, double LRPower, double RFPower, double RRPower,
-        double runSecs)
-        {
-
-
-            rightFront.setPower(RFPower); //strafes right
-            rightRear.setPower(RRPower);
-            leftFront.setPower(LFPower);
-            leftRear.setPower(LRPower);
-            runtime.reset();
-            while (opModeIsActive() && (runtime.milliseconds() < runSecs)) {
-                telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
-                telemetry.update();
-            }
-            runtime.reset();
-            rightFront.setPower(0);
-            rightRear.setPower(0);
-            leftFront.setPower(0);
-            leftRear.setPower(0);
-            }
-
-
-
-        }
+}
 
 
 
