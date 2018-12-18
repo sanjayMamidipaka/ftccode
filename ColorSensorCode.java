@@ -45,6 +45,7 @@ public class ColorSensorCode extends LinearOpMode {
     public ColorSensor sensorColor;
     public DcMotor hangingMotor;
     public DcMotor hangingMotor1;
+    public DcMotor markerMotor;
 
 
     //from TeleOp
@@ -70,13 +71,13 @@ public class ColorSensorCode extends LinearOpMode {
         sensorColor = hardwareMap.get(ColorSensor.class, "sensorColor");
         hangingMotor = hardwareMap.dcMotor.get("hangingMotor");
         hangingMotor1 = hardwareMap.dcMotor.get("hangingMotor1");
-        //markerMotor = hardwareMap.dcMotor.get("markerMotor");
+        markerMotor = hardwareMap.dcMotor.get("markerMotor");
 
 
         hangingMotor.setPower(-0.5); //brings robot down
         hangingMotor1.setPower(0.5);
         runtime.reset();
-        while (opModeIsActive() && (runtime.milliseconds() < 2000)) {
+        while (opModeIsActive() && (runtime.milliseconds() < 2500)) {
             telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
             telemetry.update();
         }
@@ -84,7 +85,7 @@ public class ColorSensorCode extends LinearOpMode {
         hangingMotor1.setPower(0);
 
 
-        rightFront.setPower(-0.4); //strafes right a little to relieve the natural slant
+        /*rightFront.setPower(-0.4); //strafes right a little to relieve the natural slant
         rightRear.setPower(0.4);
         leftFront.setPower(-0.3);
         leftRear.setPower(0.3);
@@ -97,12 +98,12 @@ public class ColorSensorCode extends LinearOpMode {
         rightRear.setPower(0);
         leftFront.setPower(0);
         leftRear.setPower(0);
-        runtime.reset();
+        runtime.reset();*/
 
         hangingMotor.setPower(-0.5); //brings robot down again
         hangingMotor1.setPower(0.5);
         runtime.reset();
-        while (opModeIsActive() && (runtime.milliseconds() < 1000)) {
+        while (opModeIsActive() && (runtime.milliseconds() < 1500)) {
             telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
             telemetry.update();
         }
@@ -126,12 +127,12 @@ public class ColorSensorCode extends LinearOpMode {
         sleep(2000);
         runtime.reset();
 
-        rightFront.setPower(0.3); //strafes right
-        rightRear.setPower(-0.3);
-        leftFront.setPower(-0.3);
-        leftRear.setPower(0.3);
+        rightFront.setPower(0.6); //strafes right to the depot
+        rightRear.setPower(-0.6);
+        leftFront.setPower(0.6);
+        leftRear.setPower(-0.6);
         runtime.reset();
-        while (opModeIsActive() && (runtime.milliseconds() < 3000)) {
+        while (opModeIsActive() && (runtime.milliseconds() < 1500)) {
             telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
             telemetry.update();
         }
@@ -144,11 +145,55 @@ public class ColorSensorCode extends LinearOpMode {
 
 
 
+        rightFront.setPower(0.6); //rotates
+        rightRear.setPower(0.6);
+        leftFront.setPower(0.6);
+        leftRear.setPower(0.6);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.milliseconds() < 1300)) {
+            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+            telemetry.update();
+        }
+        rightFront.setPower(0);
+        rightRear.setPower(0);
+        leftFront.setPower(0);
+        leftRear.setPower(0);
+        sleep(2000);
+        runtime.reset();
+
+        rightFront.setPower(-0.6); //moves forward all the way to the depot
+        rightRear.setPower(-0.6);
+        leftFront.setPower(0.6);
+        leftRear.setPower(0.6);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.milliseconds() < 1700)) {
+            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+            telemetry.update();
+        }
+        rightFront.setPower(0);
+        rightRear.setPower(0);
+        leftFront.setPower(0);
+        leftRear.setPower(0);
+        sleep(2000);
+        runtime.reset();
+
+        runtime.reset(); //drops the team marker
+        markerMotor = hardwareMap.dcMotor.get("markerMotor");
+        markerMotor.setPower(0.5);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.milliseconds() < 3000)) {
+            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+            telemetry.update();
+        }
+        markerMotor.setPower(0);
+
+
+
 
         telemetry.addData("Not going yet", 0);
 
 
-        while (isYellow == false) {
+        /*while (isYellow == false) {
 
             // get a reference to the distance sensor that shares the same name.
             //sensorDistance = hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
@@ -308,7 +353,7 @@ public class ColorSensorCode extends LinearOpMode {
 
             }
 
-        }
+        }*/
 
 
 
