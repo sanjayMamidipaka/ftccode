@@ -137,7 +137,7 @@ public class finalTensorflow extends LinearOpMode {
                 hangingMotor.setPower(-0.5); //brings robot down
                 hangingMotor1.setPower(-0.5);
                 runtime.reset();
-                while (opModeIsActive() && (runtime.milliseconds() < 4000)) {
+                while (opModeIsActive() && (runtime.milliseconds() < 5000)) {
                     telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
                     telemetry.update();
                 }
@@ -145,9 +145,10 @@ public class finalTensorflow extends LinearOpMode {
                 hangingMotor1.setPower(0);
 
 
-                movement(800, 0.3, 0.3, -0.3, -0.3); //moving backward to remove the hook
+                movement(400, 0.3, 0.3, -0.3, -0.3); //moving backward to remove the hook
                 sleep(1000);
-                movement(1300, 0.6, 0.6, 0.6, 0.6); //rotates the robot in place
+                movement(1000, 0.6, -0.6, 0.6, -0.6); //strafes right to move forward a little
+                movement(1200, 0.6, 0.6, 0.6, 0.6); //rotates the robot in place
                 sleep(1000);
             }
 
@@ -179,11 +180,7 @@ public class finalTensorflow extends LinearOpMode {
                                     movement(1700, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
                                     markerMotor.setPower(0.5); //drops the team marker in place
                                     runtime.reset();
-                                    while (opModeIsActive() && (runtime.milliseconds() < 3000)) {
-                                        telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
-                                        telemetry.update();
-                                    }
-                                    markerMotor.setPower(0);
+                                    //placeTeamMarker();
                                     runtime.reset();
                                     break;
                                 } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
@@ -193,11 +190,7 @@ public class finalTensorflow extends LinearOpMode {
                                     movement(1700, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
                                     markerMotor.setPower(0.5); //drops the team marker in place
                                     runtime.reset();
-                                    while (opModeIsActive() && (runtime.milliseconds() < 3000)) {
-                                        telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
-                                        telemetry.update();
-                                    }
-                                    markerMotor.setPower(0);
+                                    //placeTeamMarker();
                                     break;
                                 } else {
                                     telemetry.addData("Gold Mineral Position", "Center");
@@ -205,11 +198,7 @@ public class finalTensorflow extends LinearOpMode {
                                     movement(1700, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
                                     markerMotor.setPower(0.5); //drops the team marker in place
                                     runtime.reset();
-                                    while (opModeIsActive() && (runtime.milliseconds() < 3000)) {
-                                        telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
-                                        telemetry.update();
-                                    }
-                                    markerMotor.setPower(0);
+                                    //placeTeamMarker();
                                     break;
                                 }
 
@@ -278,5 +267,14 @@ public class finalTensorflow extends LinearOpMode {
         leftFront.setPower(0);
         leftRear.setPower(0);
         runtime.reset();
+    }
+
+    public void placeTeamMarker()
+    {
+        while (opModeIsActive() && (runtime.milliseconds() < 3000)) {
+            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+            telemetry.update();
+        }
+        markerMotor.setPower(0);
     }
 }
