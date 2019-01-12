@@ -56,7 +56,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@Autonomous(name = "TensorFlowTest1")
+@Autonomous(name = "TensorFlow")
 public class finalTensorFlow1 extends LinearOpMode {
 
     Robot robot = new Robot();
@@ -67,6 +67,18 @@ public class finalTensorFlow1 extends LinearOpMode {
     boolean mineralLeft;
     boolean mineralRight;
     boolean mineralCenter;
+
+    //MOTORS
+    public DcMotor rightRear;
+    public DcMotor leftRear;
+    public DcMotor rightFront;
+    public DcMotor leftFront;
+    //public ColorSensor sensorColor;
+    public DcMotor hangingMotor;
+    public DcMotor hangingMotor1;
+
+    //SERVOS
+    public Servo markerServo;
 
     public ElapsedTime timer = new ElapsedTime();
 
@@ -108,14 +120,14 @@ public class finalTensorFlow1 extends LinearOpMode {
         timer.reset();
         telemetry.addData("timeElapsed", timer.time());
 
-        robot.rightRear = hardwareMap.dcMotor.get("rightRear");
-        robot.leftRear = hardwareMap.dcMotor.get("leftRear");
-        robot.rightFront = hardwareMap.dcMotor.get("robot.rightFront");
-        robot.leftFront = hardwareMap.dcMotor.get("robot.leftFront");
+        rightRear = hardwareMap.dcMotor.get("rightRear");
+      leftRear = hardwareMap.dcMotor.get("leftRear");
+        rightFront = hardwareMap.dcMotor.get("rightFront");
+        leftFront = hardwareMap.dcMotor.get("leftFront");
         //sensorColor = hardwareMap.get(ColorSensor.class, "sensorColor");
-        robot.hangingMotor = hardwareMap.dcMotor.get("robot.hangingMotor");
-        robot.hangingMotor1 = hardwareMap.dcMotor.get("robot.hangingMotor1");
-        robot.markerServo = hardwareMap.servo.get("robot.markerServo");
+        hangingMotor = hardwareMap.dcMotor.get("hangingMotor");
+        hangingMotor1 = hardwareMap.dcMotor.get("hangingMotor1");
+        markerServo = hardwareMap.servo.get("markerServo");
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
@@ -202,10 +214,10 @@ public class finalTensorFlow1 extends LinearOpMode {
                         /*
                         else if (updatedRecognitions.size()<3 && timer.time()>= 10 )
                         {
-                            robot.adjust();
-                            robot.movement(1700, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
-                            robot.hangingMotor.setPower(0);
-                            robot.hangingMotor1.setPower(0);
+                            adjust();
+                            movement(1700, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
+                            hangingMotor.setPower(0);
+                            hangingMotor1.setPower(0);
 
                         }
                         */
@@ -222,47 +234,53 @@ public class finalTensorFlow1 extends LinearOpMode {
 
         if(mineralLeft == true)
         {
-            robot.adjust();
+            adjust();
             sleep(1000);
             runtime.reset();
-            robot.movement(1500, -0.6, 0.6, -0.6, 0.6); //strafes left to sample
-            robot.movement(1700, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
+            movement(1500, -0.6, 0.6, -0.6, 0.6); //strafes left to sample
+            movement(1400, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
             runtime.reset();
             sleep(1000);
-            robot.movement(1700, -0.6, -0.6, -0.6, -0.6);
+            movement(2800, -0.6, -0.6, -0.6, -0.6);
             runtime.reset();
-            robot.placeTeamMarker();
+            movement(700, -0.6, 0.6, -0.6, 0.6); //strafes left into depot
+            runtime.reset();
+            placeTeamMarker();
             runtime.reset();
         }
         else if (mineralRight == true)
         {
-            robot.adjust();
+            adjust();
             sleep(1000);
             runtime.reset();
-            robot.movement(1500, 0.6, -0.6, 0.6, -0.6); //strafes right to sample
-            robot.movement(1700, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
+            movement(800, 0.6, -0.6, 0.6, -0.6); //strafes right to sample
+            movement(1700, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
             runtime.reset();
             sleep(1000);
-            robot.movement(1700, -0.6, -0.6, -0.6, -0.6);
+            movement(500, 0.6, 0.6, 0.6, 0.6);
             runtime.reset();
-            robot.placeTeamMarker();
+            movement(800, -0.6, 0.6, -0.6, 0.6); //strafes left to depot
+            movement(400, 0.6, 0.6, 0.6, 0.6);
+            placeTeamMarker();
+            movement(400, -0.6, -0.6, -0.6, -0.6);
+            movement(800, 0.6, -0.6, 0.6, -0.6); //strafes right to crater
+
         }
         else
         {
-            robot.adjust();
+            adjust();
             sleep(1000);
             runtime.reset();
-            robot.movement(1500, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
-            sleep(1000);
-            robot.movement(2000, -0.6, -0.6, -0.6, -0.6);
+            movement(1700, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
+            movement(3300, -0.6, -0.6, -0.6, -0.6);
             runtime.reset();
-            robot.placeTeamMarker();
+            placeTeamMarker();
         }
 
 
 
-       // robot.movement(1300, 0.6, 0.6, 0.6, 0.6); //rotates the robot in place
-        //robot.movement(1700, -0.6, -0.6, 0.6, 0.6); //moves the robot to the crater
+       // movement(1300, 0.6, 0.6, 0.6, 0.6); //rotates the robot in place
+        //movement(1700, -0.6, -0.6, 0.6, 0.6); //moves the robot to the crater
 
     }
 
@@ -296,6 +314,50 @@ public class finalTensorFlow1 extends LinearOpMode {
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
 
     }
+
+    public void movement(double mills, double RF, double RR, double LF, double LR) {
+        rightFront.setPower(RF); //moving forward to remove hook
+        rightRear.setPower(RR);
+        leftFront.setPower(LF);
+        leftRear.setPower(LR);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.milliseconds() < mills)) {
+            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+            telemetry.update();
+        }
+        rightFront.setPower(0);
+        rightRear.setPower(0);
+        leftFront.setPower(0);
+        leftRear.setPower(0);
+        runtime.reset();
+    }
+
+    public void placeTeamMarker() {
+
+
+        markerServo.setPosition(0.3);
+        runtime.reset();
+    }
+    public void adjust()
+    {
+        hangingMotor.setPower(-0.5); //brings robot down
+        hangingMotor1.setPower(-0.5);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.milliseconds() < 4850)) {
+            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
+            telemetry.update();
+        }
+        hangingMotor.setPower(0);
+        hangingMotor1.setPower(0);
+
+
+        movement(400, 0.3, 0.3, -0.3, -0.3); //moving backward to remove the hook
+        sleep(1000);
+        movement(1000, 0.6, -0.6, 0.6, -0.6); //strafes right to move forward a little
+        movement(1000, 0.6, 0.6, 0.6, 0.6); //rotates the robot in place
+
+    }
+
 
 
 }
