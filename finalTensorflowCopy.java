@@ -312,16 +312,19 @@ public class finalTensorflowCopy extends LinearOpMode{
                 adjust();
                 sleep(1000);
                 runtime.reset();
+                telemetry.addData("strafes left to sample", "1");
                 movement(1500, -0.6, 0.6, -0.6, 0.6); //strafes left to sample
-                movement(1400, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
+                telemetry.addData("moves forward to the depot and knocks out the sample", "1");
+                movement(1800, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
                 runtime.reset();
                 sleep(1000);
-                movement(2800, -0.6, -0.6, -0.6, -0.6);
-                runtime.reset();
-                movement(700, -0.6, 0.6, -0.6, 0.6); //strafes left into depot
-                runtime.reset();
-                markerServo.setPosition(.3);
-                runtime.reset();
+                movement(600, 0.6, 0.6, 0.6, 0.6); //rotate right
+                movement(500, -0.6, -0.6, 0.6, 0.6); //move forward a bit
+                markerServo.setPosition(0.3); //place team marker
+                sleep(200);
+                markerServo.setPosition(0);
+                movement(6000, 0.6, 0.6, -0.6, -0.6); //move backward to the crater
+
             }
             else if (mineralRight == true)
             {
@@ -331,14 +334,21 @@ public class finalTensorflowCopy extends LinearOpMode{
                 movement(800, 0.6, -0.6, 0.6, -0.6); //strafes right to sample
                 movement(1700, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
                 runtime.reset();
-                sleep(1000);
-                movement(500, 0.6, 0.6, 0.6, 0.6);
+                sleep(500);
+                movement(600, -0.6, -0.6, -0.6, -0.6); //rotates in place a bit
                 runtime.reset();
-                movement(800, -0.6, 0.6, -0.6, 0.6); //strafes left to depot
-                movement(400, 0.6, 0.6, 0.6, 0.6);
+                //movement(1000, -0.6, 0.6, -0.6, 0.6); //strafes left to depot
+                movement(200, -0.6, -0.6, 0.6, 0.6); //moves forward a little bit
                 markerServo.setPosition(0.3);
-                movement(400, -0.6, -0.6, -0.6, -0.6);
-                movement(800, 0.6, -0.6, 0.6, -0.6); //strafes right to crater
+
+                sleep(1000);
+                movement(6500, 0.6, 0.6, -0.6, -0.6); //moves backwards
+                /*movement(5000, 0.6, -0.6, 0.6, -0.6); //strafes right to the crater
+                sleep(200);
+                movement(1100, 0.6, 0.6, 0.6, 0.6); //rotates in place
+                sleep(200);
+                movement(700, -0.6, -0.6, 0.6, 0.6); //moves forward*/
+
 
             }
             else
@@ -346,13 +356,19 @@ public class finalTensorflowCopy extends LinearOpMode{
                 adjust();
                 sleep(1000);
                 runtime.reset();
-                movement(1800, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
+                movement(250, -0.6, 0.6, -0.6, 0.6); //strafe a little to the left
+                sleep(100);
+                movement(2900, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
                 runtime.reset();
-                markerServo.setPosition(0.3);
-                sleep(1000);
-                movement(900, 0.6, 0.6, 0.6, 0.6);
-                sleep(1000);
-                movement(1700, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
+                markerServo.setPosition(0.3); //drops team marker
+                movement(650, 0.6, 0.6, 0.6, 0.6); //rotates in place
+                markerServo.setPosition(0);
+                movement(5000, 0.6, -0.6, 0.6, -0.6); //strafes right to the crater
+                sleep(200);
+                movement(1200, 0.6, 0.6, 0.6, 0.6); //rotates in place
+                sleep(200);
+                movement(1100, -0.6, -0.6, 0.6, 0.6); //moves forward
+
 
             }
 
@@ -432,8 +448,8 @@ public class finalTensorflowCopy extends LinearOpMode{
 
 
             movement(400, 0.3, 0.3, -0.3, -0.3); //moving backward to remove the hook
-            sleep(1000);
-            movement(1000, 0.6, -0.6, 0.6, -0.6); //strafes right to move forward a little
+            sleep(500);
+            movement(1200, 0.6, -0.6, 0.6, -0.6); //strafes right to move forward a little
             movement(1100, 0.6, 0.6, 0.6, 0.6); //rotates the robot in place
 
         }
