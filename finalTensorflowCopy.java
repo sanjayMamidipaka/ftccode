@@ -318,12 +318,12 @@ public class finalTensorflowCopy extends LinearOpMode{
                 movement(1800, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
                 runtime.reset();
                 sleep(1000);
-                movement(600, 0.6, 0.6, 0.6, 0.6); //rotate right
+                movement(550, 0.6, 0.6, 0.6, 0.6); //rotate right
                 movement(500, -0.6, -0.6, 0.6, 0.6); //move forward a bit
                 markerServo.setPosition(0.3); //place team marker
                 sleep(200);
                 markerServo.setPosition(0);
-                movement(6000, 0.6, 0.6, -0.6, -0.6); //move backward to the crater
+                movement(4000, 0.6, 0.6, -0.6, -0.6); //move backward to the crater
 
             }
             else if (mineralRight == true)
@@ -342,7 +342,7 @@ public class finalTensorflowCopy extends LinearOpMode{
                 markerServo.setPosition(0.3);
 
                 sleep(1000);
-                movement(6500, 0.6, 0.6, -0.6, -0.6); //moves backwards
+                movement(4200, 0.6, 0.6, -0.6, -0.6); //moves backwards
                 /*movement(5000, 0.6, -0.6, 0.6, -0.6); //strafes right to the crater
                 sleep(200);
                 movement(1100, 0.6, 0.6, 0.6, 0.6); //rotates in place
@@ -358,16 +358,18 @@ public class finalTensorflowCopy extends LinearOpMode{
                 runtime.reset();
                 movement(250, -0.6, 0.6, -0.6, 0.6); //strafe a little to the left
                 sleep(100);
-                movement(2900, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
+                movement(2200, -0.6, -0.6, 0.6, 0.6); //moves forward to the depot and knocks out the sample
                 runtime.reset();
                 markerServo.setPosition(0.3); //drops team marker
-                movement(650, 0.6, 0.6, 0.6, 0.6); //rotates in place
+                movement(600, 0.6, 0.6, 0.6, 0.6); //rotates in place
                 markerServo.setPosition(0);
-                movement(5000, 0.6, -0.6, 0.6, -0.6); //strafes right to the crater
+                movement(1000, 0.6, -0.6, 0.6, -0.6); //strafes right a bit
                 sleep(200);
-                movement(1200, 0.6, 0.6, 0.6, 0.6); //rotates in place
+                movement(1000, 0.6, 0.6, 0.6, 0.6); //rotates in place
                 sleep(200);
-                movement(1100, -0.6, -0.6, 0.6, 0.6); //moves forward
+                movement(600, -0.6, 0.6, -0.6, 0.6); //strafes left a bit
+                sleep(200);
+                movement(3800, -0.6, -0.6, 0.6, 0.6); //moves forward to the crater
 
 
             }
@@ -439,7 +441,7 @@ public class finalTensorflowCopy extends LinearOpMode{
             hangingMotor.setPower(-0.5); //brings robot down
             hangingMotor1.setPower(-0.5);
             runtime.reset();
-            while (opModeIsActive() && (runtime.milliseconds() < 4850)) {
+            while (opModeIsActive() && (runtime.milliseconds() < 5000)) {
                 telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.milliseconds());
                 telemetry.update();
             }
